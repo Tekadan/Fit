@@ -1,0 +1,66 @@
+﻿@model NutritionBoi.Web.Models.ClientInformationModel
+@{
+    ViewBag.Title = "Calculate";
+}
+
+<h2>Calculate Your Macros</h2>
+
+<p>This will take some key information for you and predict your caloric and macronutrient needs based on your lifestyle and goals.</p>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h4>Client Information</h4>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.AverageWeightInKg, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => x.AverageWeightInKg, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.AverageWeightInKg, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.BodyFatPercentage, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => x.BodyFatPercentage, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.BodyFatPercentage, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.ActivityRate, new { htmlAttributes = new { @class = "form-control" } })
+            <select id="activitySelectInput" name="ActivityRate" value="@Model.ActivityRate" class="form-control">
+                <option value="1.2">Sedentary</option>
+                <option value="1.375">Light Active</option>
+                <option value="1.55">Moderate</option>
+                <option value="1.725">Very Active</option>
+                <option value="1.9">Extreme</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.ActivityRate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.GoalType, new { htmlAttributes = new { @class = "form-control" } })
+            <select id="activitySelectInput" name="GoalType" value="@Model.GoalType" class="form-control">
+                <option value="Lose">Lose</option>
+                <option value="Maintain">Maintain</option>
+                <option value="Gain">Gain</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.GoalType, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.GoalIntensity, new { htmlAttributes = new { @class = "form-control" } })
+            <select id="activitySelectInput" name="GoalIntensity" value="@Model.GoalIntensity" class="form-control">
+                <option value="Light">Light</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Intense">Intense</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.GoalIntensity, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Calculate" class="btn btn-primary" />
+            <a href="@Url.Action("DumpCookies", "Home")" class="btn btn-danger">
+                Start Fresh
+            </a>
+        </div>
+    </div>
+}

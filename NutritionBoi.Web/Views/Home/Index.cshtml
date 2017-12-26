@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Nutrition Boi</h1>
+    <p class="lead">It looks like you already have some macros. Click the link below to see them!</p>
+    @Html.ActionLink("View Current Macros", "CurrentMacros", null, new { @class = "btn btn-default btn-primary" })
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Change Goal</h2>
+        <p>
+            Sometimes change is good, maybe you want to be more aggressive with your cut, or lay off your bulk a bit. Whatever that change is, click the link below to restart your journey!
+        </p>
+        @Html.ActionLink("Recalculate", "Calculate", null, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-4">
+        <h2>About This Site</h2>
+        <p>Learn more about the goal of this site, and how it works to achieve your goals.</p>
+        @Html.ActionLink("Learn More", "About", null, new { @class = "btn btn-default" })
+    </div>
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <div class="col-md-4">
+            <h2>Cookie Information</h2>
+            <p>There are currently @Request.Cookies.Count cookies in memory. Here they are:</p>
+            @for (int i = 0; i < Request.Cookies.Count; i++)
+            {
+                <p>@Request.Cookies[i].Name [@(Request.Cookies[i].Expires)]</p>
+            }
+        </div>
+    }
+</div>

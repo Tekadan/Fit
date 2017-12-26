@@ -1,0 +1,75 @@
+﻿@model NutritionBoi.Web.Models.MacronutrientsModel
+@{
+    ViewBag.Title = "CurrentMacros";
+}
+
+<h2>My Prescribed Macronutrients</h2>
+
+@if (Model != null)
+{
+    <div class="form-horizontal">
+        <h4>Client's Daily Macronutrient Intake:</h4>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Calories, new { htmlAttributes = new { @class = "form-control" } })
+            @Model.Calories Calories
+        </div>
+
+        @if (HttpContext.Current.IsDebuggingEnabled)
+        {
+            <div class="form-group">
+                @Html.LabelFor(x => x.CaloricMaintainanceAdjustment, new { htmlAttributes = new { @class = "form-control" } })
+                @(Model.CaloricMaintainanceAdjustment >= 0 ? "+" : "-")
+                @Model.CaloricMaintainanceAdjustment Adjusted Calories
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Carbohydrates, new { htmlAttributes = new { @class = "form-control" } })
+            @NutritionBoi.Web.Models.MacronutrientsModel.GetDisplayStringForMacronutrients(@Model.Carbohydrates)
+            [@Model.Carbohydrates g Goal]
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Fats, new { htmlAttributes = new { @class = "form-control" } })
+            @NutritionBoi.Web.Models.MacronutrientsModel.GetDisplayStringForMacronutrients(@Model.Fats)
+            [@Model.Fats g goal]
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Proteins, new { htmlAttributes = new { @class = "form-control" } })
+            @NutritionBoi.Web.Models.MacronutrientsModel.GetDisplayStringForMacronutrients(@Model.Proteins)
+            [@Model.Proteins Goal]
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.CalculatedDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Model.CalculatedDate.ToShortDateString()
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.RecalculateDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Model.RecalculateDate.ToShortDateString()
+        </div>
+
+        @if (@Model.NeedsUpdate)
+        {
+            <p class="text-warning">These macros are over 7 days old and may not be accurate. Please recalcuate your macros by pressing the button below.</p>
+        }
+        else
+        {
+            <p>If you want to update these values, just click the button below to recalculate your macros.</p>
+        }
+
+        @Html.ActionLink("Recalculate My Macros", "Calculate", null, new { @class = "btn btn-default btn-primary" })
+    </div>
+}
+else
+{
+    <div>
+        <h4>No Macro Information!</h4>
+        <p>You need to recalculate your macros. This happens when you delete your cookies, haven't used this tool in 14 days, or haven't used this tool before at all.</p>
+        @Html.ActionLink("Calculate My Macros", "Calculate", null, new { @class = "btn btn-default" })
+    </div>
+}
+
